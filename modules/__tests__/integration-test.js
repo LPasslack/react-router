@@ -85,6 +85,28 @@ describe('Integration Tests', () => {
 
 })
 
+describe('nested Match', () => {
+  it('renders a nested relative pattern', () => {
+    const Page = () => <div>Page</div>
+    const html = renderToString(
+      <Router location="/test/nested/paths">
+        <Match pattern="/test/nested" render={() => <Match pattern="paths" component={Page} />} />
+      </Router>
+    )
+    expect(html).toContain('Page')
+  })
+
+  it('renders a nested relative pattern from the root', () => {
+    const Page = () => <div>Page</div>
+    const html = renderToString(
+      <Router location="/test">
+        <Match pattern="/" render={() => <Match pattern="test" component={Page} />} />
+      </Router>
+    )
+    expect(html).toContain('Page')
+  })
+})
+
 describe('Ambiguous matches?', () => {
   it('should render both the dynamic and static patterns', () => {
     const html = renderToString(
@@ -208,6 +230,3 @@ describe('Link location descriptors', () => {
     expect(href).toEqual('/test-url?foo=bar')
   })
 })
-
-
-
