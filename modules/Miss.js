@@ -8,14 +8,14 @@ class Miss extends React.Component {
   }
 
   static contextTypes = {
-    matchCounter: PropTypes.object.isRequired,
+    match: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired
   }
 
   render() {
     const { render, component:Component } = this.props
-    const { location, matchCounter } = this.context
-    return matchCounter.matchFound() ? null : (
+    const { location, match } = this.context
+    return match.matchFound ? null : (
       render ? (
         render({ location })
       ) : (
